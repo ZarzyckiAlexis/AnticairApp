@@ -1,0 +1,154 @@
+<!-- Show the dark theme if savedTheme is 'dark', otherwise show the light theme -->
+<span *ngIf="currentTheme === 'dark'; else showDefault">
+    <div class="content">
+        <section class="container mx-auto px-6 py-16">
+            <h2 class="text-3xl font-bold text-gray-200 text-center mb-12">Items for Sale</h2>            
+            <div class="flex justify-center mb-6">
+                <input 
+                    type="text" 
+                    [(ngModel)]="searchText" 
+                    (input)="onSearchChange()" 
+                    placeholder="Search by title or description..." 
+                    class="p-3 w-full max-w-3xl bg-gray-700 text-gray-200 border border-gray-600 rounded-lg focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 text-lg mr-4"
+                />
+                
+                <select 
+                    [(ngModel)]="sortCriteria" 
+                    (change)="onSortChange()" 
+                    class="p-3 w-full max-w-xs bg-gray-700 text-gray-200 border border-gray-600 rounded-lg focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 text-lg"
+                >
+                    <option value="id">Sort by date</option>
+                    <option value="price">Sort by price</option>
+                </select>
+            </div>
+
+            <div *ngIf="antiquities.length > 0; else noData">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-8">
+                    <div *ngFor="let antiquity of paginatedAntiquities" class="bg-gray-700 p-6 rounded-lg shadow-lg">
+                        <img *ngIf="antiquity.photos && antiquity.photos.length > 0; else placeholder"
+                            [src]="antiquity.photos[0]" 
+                            [alt]="antiquity.titleAntiquity" 
+                            class="object-contain rounded-md mb-4"
+                            style="width: 100%; height: 250px; object-fit: cover; margin: 0 auto;">
+
+                        <ng-template #placeholder>
+                            <div class="w-full h-48 bg-gray-500 rounded-md mb-4 flex items-center justify-center">
+                                <span class="text-gray-300">No Image Available</span>
+                            </div>
+                        </ng-template>
+                        
+                        <h3 class="text-xl font-bold text-gray-200 mb-2">{{ antiquity.titleAntiquity }}</h3>
+                        <p class="text-gray-400 mb-4">{{ antiquity.descriptionAntiquity }}</p>
+                        <p class="price-dark mb-4 text-yellow-400 font-bold">Price: {{ antiquity.priceAntiquity | number: '1.2-2'}}€</p>
+                        <div class="center-button">
+                            <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md hover:bg-yellow-600" (click)="viewDetails(antiquity.idAntiquity)">View Details</button>
+                        </div>
+                </div>
+                </div>
+                <div class="flex justify-center space-x-2 mt-8">
+                    <button 
+                        (click)="changePage(currentPage - 1)"
+                        [disabled]="currentPage === 1"
+                        class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg disabled:opacity-50">
+                        Previous
+                    </button>
+                    <button 
+                        [class.bg-yellow-500]="currentPage" 
+                        class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg"> 
+                        {{ currentPage }} 
+                    </button>
+                    <button 
+                        (click)="changePage(currentPage + 1)"
+                        [disabled]="currentPage === totalPages"
+                        class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg disabled:opacity-50">
+                        Next
+                    </button>
+                </div>
+            </div>
+            <ng-template #noData>
+                <p class="text-gray-300 text-center">No verified antiquities are available at the moment.</p>
+            </ng-template>
+        </section>
+    </div>
+</span>
+
+<ng-template #showDefault>
+    <div class="content">
+        <section class="container mx-auto px-6 py-16">
+            <h2 class="text-3xl font-bold text-gray-800 text-center mb-12">Items for Sale</h2>            
+            <div class="flex justify-center mb-6 space-x-4">
+                <input 
+                    type="text" 
+                    [(ngModel)]="searchText" 
+                    (input)="onSearchChange()" 
+                    placeholder="Search by title or description..." 
+                    class="p-3 w-full max-w-3xl text-gray-800 border border-gray-300 rounded-lg focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 text-lg"
+                />
+                
+                <select 
+                    [(ngModel)]="sortCriteria" 
+                    (change)="onSortChange()" 
+                    class="p-3 w-full max-w-xs text-gray-800 border border-gray-300 rounded-lg focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 text-lg"
+                >
+                    <option value="id">Sort by date</option>
+                    <option value="price">Sort by price</option>
+                </select>
+            </div>
+
+            <div *ngIf="antiquities.length > 0; else noData">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-8">
+                    <div *ngFor="let antiquity of paginatedAntiquities" class="bg-white p-6 rounded-lg shadow-lg">
+                        <img *ngIf="antiquity.photos && antiquity.photos.length > 0; else placeholder"
+                            [src]="antiquity.photos[0]" 
+                            [alt]="antiquity.titleAntiquity" 
+                            class="object-contain rounded-md mb-4"
+                            style="width: 100%; height: 250px; object-fit: cover; margin: 0 auto;">
+
+                        <ng-template #placeholder>
+                            <div class="w-full h-48 bg-gray-200 rounded-md mb-4 flex items-center justify-center">
+                                <span class="text-gray-500">No Image Available</span>
+                            </div>
+                        </ng-template>
+
+                    <!-- Title -->
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">{{ antiquity.titleAntiquity }}</h3>
+    
+                    <!-- Description -->
+                    <p class="text-gray-600 mb-4">{{ antiquity.descriptionAntiquity }}</p>
+    
+                    <!-- Price -->
+                    <p class="price mb-4 text-yellow-400 font-bold">Price: {{ antiquity.priceAntiquity | number: '1.2-2'}}€</p>
+    
+                    <!-- View Details Button -->
+                    <div class="center-button">
+                        <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md hover:bg-yellow-600" (click)="viewDetails(antiquity.idAntiquity)">View Details</button>
+                    </div>
+                </div>
+                </div>
+                <div class="flex justify-center space-x-2 mt-8">
+                    <button 
+                        (click)="changePage(currentPage - 1)"
+                        [disabled]="currentPage === 1"
+                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg disabled:opacity-50">
+                        Previous
+                    </button>
+                    <button 
+                        [class.bg-yellow-500]="currentPage" 
+                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg"> 
+                        {{ currentPage }} 
+                    </button>
+                    <button 
+                        (click)="changePage(currentPage + 1)"
+                        [disabled]="currentPage === totalPages"
+                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg disabled:opacity-50">
+                        Next
+                    </button>
+                </div>
+            </div>
+
+            <ng-template #noData>
+                <p class="text-gray-500 text-center">No verified antiquities are available at the moment.</p>
+            </ng-template>
+        </section>
+    </div>
+</ng-template>

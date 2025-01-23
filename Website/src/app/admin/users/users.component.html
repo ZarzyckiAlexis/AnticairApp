@@ -1,0 +1,245 @@
+<div class="min-h-screen flex flex-col h-full overflow-hidden" *ngIf="currentTheme === 'dark'; else lightTheme">
+  <div class="flex-1 p-10 bg-gray-800 text-gray-100 overflow-auto">
+    <h1 class="text-3xl font-bold mb-8">User Management</h1>
+
+    <!-- User Type Selection -->
+    <div class="mb-4 flex space-x-4">
+      <label class="inline-flex items-center">
+        <input type="radio" name="userType" value="admin" [(ngModel)]="selectedUserType"
+               (change)="loadSelectedUsers()" class="form-radio">
+        <span class="ml-2">Administrators</span>
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="userType" value="antiquarian" [(ngModel)]="selectedUserType"
+               (change)="loadSelectedUsers()" class="form-radio">
+        <span class="ml-2">Antiquarians</span>
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="userType" value="basic" [(ngModel)]="selectedUserType"
+               (change)="loadSelectedUsers()" class="form-radio">
+        <span class="ml-2">Users</span>
+      </label>
+    </div>
+
+    <!-- Table Section -->
+    <div class="overflow-x-auto">
+      <table class="w-full border border-gray-700 rounded-lg">
+        <thead class="bg-gray-700">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-600"
+              (click)="sortByColumn('email')">
+            Email
+            <span *ngIf="currentSortColumn === 'email'">
+                  {{ isSortAscending ? '▲' : '▼' }}
+                </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-600"
+              (click)="sortByColumn('firstName')">
+            First Name
+            <span *ngIf="currentSortColumn === 'firstName'">
+                  {{ isSortAscending ? '▲' : '▼' }}
+                </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-600"
+              (click)="sortByColumn('lastName')">
+            Last Name
+            <span *ngIf="currentSortColumn === 'lastName'">
+                  {{ isSortAscending ? '▲' : '▼' }}
+                </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-600"
+              (click)="sortByColumn('phoneNumber')">
+            Phone number
+            <span *ngIf="currentSortColumn === 'phoneNumber'">
+                  {{ isSortAscending ? '▲' : '▼' }}
+                </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-600"
+              (click)="sortByColumn('balance')">
+            Balance
+            <span *ngIf="currentSortColumn === 'balance'">
+                  {{ isSortAscending ? '▲' : '▼' }}
+                </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+            Actions
+          </th>
+        </tr>
+        </thead>
+        <tbody class="bg-gray-800 divide-y divide-gray-700">
+        <tr *ngFor="let user of paginatedUsers">
+          <td class="px-6 py-4 text-sm text-gray-100">{{user.email}}</td>
+          <td class="px-6 py-4 text-sm text-gray-100">{{user.firstName}}</td>
+          <td class="px-6 py-4 text-sm text-gray-100">{{user.lastName}}</td>
+          <td class="px-6 py-4 text-sm text-gray-100">{{user.attributes.phoneNumber | belgianPhone}}</td>
+          <td class="px-6 py-4 text-sm text-gray-100">{{user.attributes.balance || 0}} €</td>
+          <td class="px-6 py-4 text-sm text-gray-100">
+            <button class="px-4 py-2 bg-blue-500 text-white rounded"
+                    [routerLink]="['/admin/users/edit-groups', user.email]">Edit Groups</button>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded mt-4 ml-4"
+                    (click)="changeUserStatus(user.email, user.enabled ? 'Enabled' : 'Disabled')">
+              {{ user.enabled ? 'Disable' : 'Enable' }}</button>
+            <button class="px-4 py-2 bg-yellow-500 text-white rounded mt-4 ml-4"
+                    (click)="forcePasswordReset(user.email)">
+              Reset Password
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="flex justify-center space-x-2 mt-8">
+      <button
+        (click)="changePage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+        class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg disabled:opacity-50">
+        Previous
+      </button>
+      <button
+        [class.bg-yellow-500]="currentPage"
+        class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg">
+        {{ currentPage }}
+      </button>
+      <button
+        (click)="changePage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+        class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg disabled:opacity-50">
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Light Theme -->
+<ng-template #lightTheme>
+  <div class="min-h-screen flex flex-col h-full overflow-hidden">
+    <div class="flex-1 p-10 bg-gray-100 text-gray-800 overflow-auto">
+      <h1 class="text-3xl font-bold mb-8">User Management</h1>
+
+      <!-- User type selection -->
+      <div class="mb-4 flex space-x-4">
+        <label class="inline-flex items-center">
+          <input type="radio"
+                 name="userType"
+                 value="admin"
+                 [(ngModel)]="selectedUserType"
+                 (change)="loadSelectedUsers()"
+                 class="form-radio">
+          <span class="ml-2">Administrators</span>
+        </label>
+        <label class="inline-flex items-center">
+          <input type="radio"
+                 name="userType"
+                 value="antiquarian"
+                 [(ngModel)]="selectedUserType"
+                 (change)="loadSelectedUsers()"
+                 class="form-radio">
+          <span class="ml-2">Antiquarians</span>
+        </label>
+        <label class="inline-flex items-center">
+          <input type="radio"
+                 name="userType"
+                 value="basic"
+                 [(ngModel)]="selectedUserType"
+                 (change)="loadSelectedUsers()"
+                 class="form-radio">
+          <span class="ml-2">Users</span>
+        </label>
+      </div>
+
+      <!-- Table Section -->
+      <div class="overflow-x-auto">
+
+        <table class="w-full border border-gray-300 rounded-lg">
+          <thead class="bg-gray-200">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-300"
+                (click)="sortByColumn('email')">
+              Email
+              <span *ngIf="currentSortColumn === 'email'">
+                    {{ isSortAscending ? '▲' : '▼' }}
+                  </span>
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-300"
+                (click)="sortByColumn('firstName')">
+              First Name
+              <span *ngIf="currentSortColumn === 'firstName'">
+                    {{ isSortAscending ? '▲' : '▼' }}
+                  </span>
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-300"
+                (click)="sortByColumn('lastName')">
+              Last Name
+              <span *ngIf="currentSortColumn === 'lastName'">
+                    {{ isSortAscending ? '▲' : '▼' }}
+                  </span>
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-300"
+                (click)="sortByColumn('phoneNumber')">
+              Phone number
+              <span *ngIf="currentSortColumn === 'phoneNumber'">
+                    {{ isSortAscending ? '▲' : '▼' }}
+                  </span>
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-300"
+                (click)="sortByColumn('balance')">
+              Balance
+              <span *ngIf="currentSortColumn === 'balance'">
+                    {{ isSortAscending ? '▲' : '▼' }}
+                  </span>
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              Actions
+            </th>
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let user of paginatedUsers">
+            <td class="px-6 py-4 text-sm text-gray-700">{{user.email}}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{user.firstName}}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{user.lastName}}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{user.attributes.phoneNumber | belgianPhone}}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{user.attributes.balance || 0}} €</td>
+            <td class="px-6 py-4 text-sm text-gray-700">
+              <button class="px-4 py-2 bg-blue-500 text-white rounded"
+                      [routerLink]="['/admin/users/edit-groups', user.email]">Edit Groups</button>
+              <button class="px-4 py-2 bg-blue-500 text-white rounded mt-4 ml-4"
+                      (click)="changeUserStatus(user.email, user.enabled ? 'Enabled' : 'Disabled')">
+                {{ user.enabled ? 'Disable' : 'Enable' }}
+              </button>
+              <button class="px-4 py-2 bg-yellow-500 text-white rounded mt-4 ml-4"
+                      (click)="forcePasswordReset(user.email)">
+                Reset Password
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination Section -->
+      <div class="flex justify-center space-x-2 mt-8">
+        <button 
+          (click)="changePage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg disabled:opacity-50">
+          Previous
+        </button>
+        <button 
+          [class.bg-yellow-500]="currentPage" 
+          class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg"> 
+          {{ currentPage }}
+        </button>
+        <button 
+          (click)="changePage(currentPage + 1)"
+          [disabled]="currentPage === totalPages"
+          class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg disabled:opacity-50">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

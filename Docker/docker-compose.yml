@@ -1,0 +1,49 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.6
+    container_name: keycloak
+    entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev"]
+    ports:
+      - "8081:8080"
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgresql_database:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: anticairappkeycloak!
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME: 'http://localhost:8081'
+      KC_PROXY: 'edge'
+    volumes:
+      - ./keycloak_data:/opt/keycloak/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - database_network
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres:15-alpine
+    container_name: postgresql_database
+    environment:
+      POSTGRES_DB: mabase
+      POSTGRES_USER: utilisateur
+      POSTGRES_PASSWORD: motdepasse_securise
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - database_network
+
+networks:
+  database_network:
+    driver: bridge
+
+volumes:
+  postgresql_data:
+

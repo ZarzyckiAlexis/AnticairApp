@@ -1,0 +1,168 @@
+<!-- src/app/components/admin-dashboard/dashboard.component.html -->
+<div [ngClass]="currentTheme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'" class="flex min-h-screen">
+
+  <!-- ... Sidebar and Header ... -->
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Header Section -->
+    <header [ngClass]="currentTheme === 'dark' ? 'bg-gray-800' : ''" class="sticky top-0 z-40 flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <div class="flex items-center">
+        <!-- Mobile Sidebar Toggle Button -->
+        <button class="md:hidden mr-4">
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- Menu Icon -->
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- User Profile Dropdown -->
+      <div class="relative">
+        <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="user-menu" aria-haspopup="true" (click)="toggleUserMenu()">
+          <img class="h-8 w-8 rounded-full" src="https://via.placeholder.com/150" alt="User Avatar">
+        </button>
+        <!-- Dropdown Menu -->
+        <div *ngIf="isUserMenuOpen" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5">
+          <a routerLink="/profile" routerLinkActive="active" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">Profile</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Notifications -->
+    <div class="max-w-[85rem] px-4 py-2 sm:px-6 lg:px-8 mx-auto">
+      <div *ngIf="notification" class="mb-4">
+        <div [ngClass]="notification.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'" class="p-4 rounded-md flex items-center justify-between">
+          <span>{{ notification.message }}</span>
+          <button (click)="dismissNotification()" class="text-lg font-bold">&times;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-[85rem] px-4 py-6 sm:px-6 lg:px-8 mx-auto">
+
+      <!-- Welcome Section -->
+      <div class="mb-10">
+        <h2 [ngClass]="currentTheme === 'dark' ? 'text-gray-100' : 'text-gray-800'" class="text-3xl font-bold mb-2">Welcome, Admin</h2>
+        <p [ngClass]="currentTheme === 'dark' ? 'text-gray-400' : 'text-gray-600'">Manage your platform with ease</p>
+      </div>
+
+      <!-- Stats Overview -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <!-- User Stats Card -->
+        <div [ngClass]="currentTheme === 'dark' ? 'bg-slate-800 border-gray-700' : 'bg-white'" class="group flex flex-col border shadow-sm rounded-xl hover:shadow-md transition">
+          <div class="p-4 md:p-5">
+            <div class="flex items-center gap-x-2">
+              <div [ngClass]="currentTheme === 'dark' ? 'bg-blue-900/30' : 'bg-blue-100'" class="inline-flex justify-center items-center w-12 h-12 text-blue-500 rounded-lg">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+              <div class="grow">
+                <p [ngClass]="currentTheme === 'dark' ? 'text-gray-400' : 'text-gray-500'" class="text-xs uppercase tracking-wide">Active Users</p>
+                <div class="mt-1 flex items-center gap-x-2">
+                  <div *ngIf="isLoading" class="animate-pulse">
+                    <div class="h-6 w-16 bg-gray-300 rounded"></div>
+                  </div>
+                  <div *ngIf="!isLoading && !error">
+                    <h3 [ngClass]="currentTheme === 'dark' ? 'text-gray-200' : 'text-gray-800'" class="text-xl sm:text-2xl font-medium">
+                      {{ numberOfUsers | number }}
+                    </h3>
+                  </div>
+                  <div *ngIf="error" class="text-red-500 text-sm">
+                    {{ error }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Management Card -->
+        <div [ngClass]="currentTheme === 'dark' ? 'bg-slate-800 border-gray-700' : 'bg-white'" class="group relative border shadow-sm rounded-xl hover:shadow-md transition duration-300">
+          <div class="p-6">
+            <div class="flex items-center">
+              <div [ngClass]="currentTheme === 'dark' ? 'bg-blue-900/30' : 'bg-blue-100'" class="inline-flex justify-center items-center w-12 h-12 text-blue-500 rounded-lg">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <div class="ml-5">
+                <h3 [ngClass]="currentTheme === 'dark' ? 'text-gray-100' : 'text-gray-800'" class="text-xl font-semibold group-hover:text-blue-500">
+                  User Management
+                </h3>
+                <p [ngClass]="currentTheme === 'dark' ? 'text-gray-400' : 'text-gray-600'" class="mt-1">Manage accounts, roles, and permissions</p>
+              </div>
+            </div>
+            <div class="mt-6">
+              <a routerLink="/admin/users" routerLinkActive="active" class="inline-flex items-center gap-2 mt-5 text-sm font-medium text-blue-500 hover:text-blue-600" href="#">
+                Access
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add more stats cards as needed -->
+        <!-- Example: Sales, Revenue, etc. -->
+
+      </div>
+
+      <!-- Recent Activity with Chart -->
+      <div class="grid lg:grid-cols-2 gap-6">
+        <!-- Recent Activity -->
+        <div [ngClass]="currentTheme === 'dark' ? '' : 'bg-white'" class="p-6 rounded-xl shadow-sm mb-10">
+          <h3 [ngClass]="currentTheme === 'dark' ? 'text-gray-100' : 'text-gray-800'" class="text-xl font-semibold mb-4">Recent Activity</h3>
+
+          <!-- Loading State -->
+          <div *ngIf="isLoadingActivities" class="flex items-center space-x-2">
+            <svg class="w-6 h-6 text-blue-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+            <span>Loading activities...</span>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="activitiesError" class="text-red-500">
+            {{ activitiesError }}
+          </div>
+
+          <!-- Activities List -->
+          <ul *ngIf="!isLoadingActivities && !activitiesError" class="space-y-4">
+            <li *ngFor="let activity of recentActivities" class="flex items-center hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">
+              <svg
+                [ngClass]="{
+                  'text-blue-500': activity.type === 'listing',
+                  'text-gray-500': !activity.type
+                }"
+                class="w-6 h-6 mr-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <!-- Activity Icon -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <div>
+                <p [ngClass]="currentTheme === 'dark' ? 'text-gray-200' : 'text-gray-800'" class="font-medium">{{ activity.message }}</p>
+                <p [ngClass]="currentTheme === 'dark' ? 'text-gray-400' : 'text-gray-600'" class="text-sm">{{ activity.inferredTime }}</p>
+              </div>
+            </li>
+
+            <!-- No Activities Message -->
+            <li *ngIf="recentActivities.length === 0" class="text-center text-gray-500">
+              No recent activities found.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+</div>

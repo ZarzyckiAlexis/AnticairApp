@@ -1,0 +1,27 @@
+<ng-container *ngIf="antiquity">
+    <app-one-antiquity [id]="antiquity.idAntiquity"></app-one-antiquity>
+
+    <span *ngIf="currentTheme === 'dark'; else showDefault">
+        <div class="flex justify-center items-center bg-gray-800 pt-6 pb-6">
+            <div class="flex justify-between space-x-4">
+                <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md hover:bg-yellow-600" (click)="goBack()">Go Back</button>
+                <button class="bg-green-500 text-gray-900 px-6 py-3 rounded-md hover:bg-green-600" (click)="buyAntiquity()">Buy</button>
+            </div>
+        </div>
+        <div *ngIf="errorMessage" class="mt-4 text-center text-red-400">
+            {{ errorMessage }}
+        </div>
+    </span>
+
+    <ng-template #showDefault>
+        <div class="flex justify-center items-center bg-gray-100 pt-6 pb-6">
+            <div class="flex justify-between space-x-4">
+                <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md hover:bg-yellow-600" (click)="goBack()">Go Back</button>
+                <button class="bg-green-500 text-gray-900 px-6 py-3 rounded-md hover:bg-green-600" (click)="buyAntiquity()">Buy</button>
+            </div>
+        </div>
+        <div *ngIf="errorMessage" class="mt-4 text-center text-red-600 pt-6">
+            {{ errorMessage }}
+        </div>
+    </ng-template>
+</ng-container>

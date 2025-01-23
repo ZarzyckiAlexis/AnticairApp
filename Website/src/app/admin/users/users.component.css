@@ -1,0 +1,8 @@
+.overflow-x-auto {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+button {
+    white-space: nowrap;
+}

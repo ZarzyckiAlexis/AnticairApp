@@ -1,0 +1,16 @@
+<div [ngClass]="{'bg-gray-800 text-gray-200': currentTheme === 'dark', 'bg-gray-50 text-gray-800': currentTheme !== 'dark'}"
+    class="app-container">
+    <!-- Navbar for non-admin routes -->
+    <app-navbar *ngIf="!isAdminRoute"></app-navbar>
+
+    <!-- Admin layout with sidebar when on admin routes -->
+    <div *ngIf="isAdminRoute" class="flex">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Router outlet for non-admin routes -->
+    <router-outlet *ngIf="!isAdminRoute"></router-outlet>
+
+    <!-- Footer for non-admin routes -->
+    <app-footer *ngIf="!isAdminRoute"></app-footer>
+</div>

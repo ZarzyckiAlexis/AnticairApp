@@ -1,0 +1,83 @@
+<span *ngIf="currentTheme === 'dark'; else showDefault">
+    <header class="bg-gray-800 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-white">Anticair'App</h1>
+            <nav class="space-x-4 hidden md:flex">
+                <a routerLink="home" class="text-gray-400 hover:text-gray-200">Home</a>
+                <a routerLink="sell" class="text-gray-400 hover:text-gray-200">Sales</a>
+                <span (click)="login()" *ngIf="!isUserLoggedIn" class="text-gray-400 hover:text-gray-200 cursor-pointer">Login</span>
+                <span *ngIf="isUserLoggedIn" routerLink="create-listing" class="text-gray-400 hover:text-gray-200 cursor-pointer">Create listing</span>
+                <span *ngIf="isUserLoggedIn && isUserAntiquarian()" routerLink="list-antiquity-verify" class="text-gray-400 hover:text-gray-200 cursor-pointer">Verify Antiquity</span>
+                <span *ngIf="isUserLoggedIn" routerLink="profile" class="text-gray-400 hover:text-gray-200 cursor-pointer">My account</span>
+                <span *ngIf="isUserAdmin()" routerLink="admin/dashboard" class="text-gray-400 hover:text-gray-200 cursor-pointer">Admin</span>
+                <span (click)="logout()" *ngIf="isUserLoggedIn" class="text-gray-400 hover:text-gray-200 cursor-pointer"><i class="fas fa-sign-out-alt mr-2"></i></span>
+                <button (click)="toggleTheme()">
+                    <i class="fas fa-sun text-yellow-500" *ngIf="currentTheme === 'dark'"></i>
+                </button>
+            </nav>
+            <button class="md:hidden flex items-center p-2 text-gray-400 hover:text-gray-200 focus:outline-none" (click)="isMenuOpen = !isMenuOpen">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <nav class="md:hidden bg-gray-800 text-white py-4" *ngIf="isMenuOpen">
+        <ul class="space-y-2 px-6">
+            <li><a routerLink="home" class="block text-gray-400 hover:text-gray-200">Home</a></li>
+            <li><a routerLink="sell" class="block text-gray-400 hover:text-gray-200">Sales</a></li>
+            <span (click)="login()" *ngIf="!isUserLoggedIn" class="block text-gray-400 hover:text-gray-200 cursor-pointer">Login</span>
+            <li><a *ngIf="isUserLoggedIn" routerLink="create-listing" class="block text-gray-400 hover:text-gray-200 cursor-pointer">Create listing</a></li>
+            <li><a *ngIf="isUserLoggedIn && isUserAntiquarian()" routerLink="list-antiquity-verify" class="text-gray-400 hover:text-gray-200 cursor-pointer">Verify Antiquity</a></li>
+            <li><a *ngIf="isUserLoggedIn" routerLink="profile" class="block text-gray-400 hover:text-gray-200 cursor-pointer">My account</a></li>
+            <li><a *ngIf="isUserAdmin()" routerLink="admin/dashboard" class="block text-gray-400 hover:text-gray-200 cursor-pointer">Admin</a></li>
+            <li><a (click)="logout()" *ngIf="isUserLoggedIn" class="block text-gray-400 hover:text-gray-200 cursor-pointer"><i class="fas fa-sign-out-alt mr-2"></i></a></li>
+            <li><button (click)="toggleTheme()" class="w-full text-left">
+                <i class="fas fa-sun text-yellow-500" *ngIf="currentTheme === 'dark'"></i></button>
+            </li>
+        </ul>
+    </nav>
+</span>
+
+<ng-template #showDefault>
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-gray-800">Anticair'App</h1>
+            <nav class="space-x-4 hidden md:flex">
+                <a routerLink="home" class="text-gray-600 hover:text-gray-800">Home</a>
+                <a routerLink="sell" class="text-gray-600 hover:text-gray-800">Sales</a>
+                <span (click)="login()" *ngIf="!isUserLoggedIn" class="text-gray-600 hover:text-gray-800 cursor-pointer">Login</span>
+                <a *ngIf="isUserLoggedIn" routerLink="create-listing" class="text-gray-600 hover:text-gray-800 cursor-pointer">Create listing</a>
+                <a *ngIf="isUserLoggedIn && isUserAntiquarian()" routerLink="list-antiquity-verify" class="text-gray-600 hover:text-gray-800 cursor-pointer">Verify Antiquity</a>
+                <a *ngIf="isUserLoggedIn" routerLink="profile" class="text-gray-600 hover:text-gray-800 cursor-pointer">My account</a>
+                <a *ngIf="isUserAdmin()" routerLink="admin/dashboard" class="text-gray-600 hover:text-gray-800 cursor-pointer">Admin</a>
+                <a (click)="logout()" *ngIf="isUserLoggedIn" class="text-gray-600 hover:text-gray-800 cursor-pointer"><i class="fas fa-sign-out-alt mr-2"></i></a>
+                <button (click)="toggleTheme()">
+                    <i class="fas fa-moon text-gray-300" *ngIf="currentTheme !== 'dark'"></i>
+                </button>
+            </nav>
+            <button class="md:hidden flex items-center p-2 text-gray-600 hover:text-gray-800 focus:outline-none" (click)="isMenuOpen = !isMenuOpen">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <nav class="md:hidden bg-white shadow-md py-4" *ngIf="isMenuOpen">
+        <ul class="space-y-2 px-6">
+            <li><a routerLink="home" class="block text-gray-600 hover:text-gray-800">Home</a></li>
+            <li><a routerLink="sell" class="block text-gray-600 hover:text-gray-800">Sales</a></li>
+            <span (click)="login()" *ngIf="!isUserLoggedIn" class="block text-gray-600 hover:text-gray-800 cursor-pointer">Login</span>
+            <span *ngIf="isUserLoggedIn" routerLink="create-listing" class="block text-gray-600 hover:text-gray-800 cursor-pointer">Create listing</span>
+            <span *ngIf="isUserLoggedIn && isUserAntiquarian()" routerLink="list-antiquity-verify" class="block text-gray-600 hover:text-gray-800 cursor-pointer">Verify Antiquity</span>
+            <span *ngIf="isUserLoggedIn" routerLink="profile" class="block text-gray-600 hover:text-gray-800 cursor-pointer">My account</span>
+            <li><a *ngIf="isUserAdmin()" routerLink="admin/dashboard" class="block text-gray-600 hover:text-gray-800 cursor-pointer">Admin</a></li>
+            <span (click)="logout()" *ngIf="isUserLoggedIn" class="block text-gray-600 hover:text-gray-800 cursor-pointer"><i class="fas fa-sign-out-alt mr-2"></i></span>
+            <li><button (click)="toggleTheme()" class="w-full text-left">
+                <i class="fas fa-moon text-gray-300" *ngIf="currentTheme !== 'dark'"></i></button>
+            </li>
+        </ul>
+    </nav>
+</ng-template>

@@ -1,0 +1,120 @@
+<ng-container *ngIf="antiquity">
+
+  <app-one-antiquity [id]="antiquity.idAntiquity"></app-one-antiquity>
+
+  <span *ngIf="currentTheme === 'dark'; else showDefault">
+    <div class="flex justify-center items-center bg-gray-800 pt-6 pb-6">
+      <div class="flex justify-between space-x-4">
+        <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md hover:bg-yellow-600"
+          (click)="openOrClosePopup()">Reject</button>
+        <button class="bg-green-500 text-gray-900 px-6 py-3 rounded-md hover:bg-green-600"
+          (click)="acceptAntiquity()">Accept</button>
+      </div>
+    </div>
+
+    <div *ngIf="this.isPopupVisible">
+      <div class="flex justify-center items-center pt-16 bg-gray-800">
+        <div class="bg-gray-700 text-gray-200 p-8 rounded-lg shadow-lg max-w-3xl w-full">
+          <h2 class="text-3xl font-bold text-center mb-6">Review about the antiquity:</h2>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 text-gray-300">Title :</label>
+            <input type="text" class="w-full p-3 border rounded-md border-gray-600 bg-gray-800 text-gray-300"
+              [(ngModel)]="this.review.note_title" />
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 text-gray-300">Description :</label>
+            <input type="text" class="w-full p-3 border rounded-md border-gray-600 bg-gray-800 text-gray-300"
+              [(ngModel)]="this.review.note_description" />
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 text-gray-300">Price :</label>
+            <input type="text" class="w-full p-3 border rounded-md border-gray-600 bg-gray-800 text-gray-300"
+              [(ngModel)]="this.review.note_price" />
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-sm font-medium mb-2 text-gray-300">Photo(s) :</label>
+            <input type="text" class="w-full p-3 border rounded-md border-gray-600 bg-gray-800 text-gray-300"
+              [(ngModel)]="this.review.note_photo" />
+          </div>
+
+          <div class="mb-8" *ngIf="this.messageErreur!==''">
+            <div class="mt-2 text-sm text-red-600 bg-red-100 border-l-4 border-red-500 px-3 py-2 rounded-md">
+              {{ this.messageErreur }}
+            </div>
+          </div>
+
+          <div class="flex justify-end">
+            <div class="flex justify-between space-x-4">
+              <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md hover:bg-yellow-600"
+                (click)="rejectAntiquity()">Confirm reject</button>
+              <button class="bg-red-500 text-gray-900 px-6 py-3 rounded-md hover:bg-red-600"
+                (click)="openOrClosePopup()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+
+  <ng-template #showDefault>
+    <div class="flex justify-center items-center bg-gray-100 pt-6 pb-6">
+      <div class="flex justify-between space-x-4">
+        <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md hover:bg-yellow-600"
+          (click)="openOrClosePopup()">Reject</button>
+        <button class="bg-green-500 text-gray-900 px-6 py-3 rounded-md hover:bg-green-600"
+          (click)="acceptAntiquity()">Accept</button>
+      </div>
+    </div>
+    <div *ngIf="this.isPopupVisible">
+      <div class="flex justify-center items-center pt-16 bg-gray-100">
+        <div class="bg-white text-gray-800 p-8 rounded-lg shadow-lg max-w-3xl w-full">
+          <h2 class="text-3xl font-bold text-center mb-6">Review about the antiquity:</h2>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 text-gray-600">Title :</label>
+            <input type="text" class="w-full p-3 border rounded-md border-gray-300 bg-white text-gray-800"
+              [(ngModel)]="this.review.note_title" />
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 text-gray-600">Description :</label>
+            <input type="text" class="w-full p-3 border rounded-md border-gray-300 bg-white text-gray-800"
+              [(ngModel)]="this.review.note_description" />
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2 text-gray-600">Price :</label>
+            <input type="text" class="w-full p-3 border rounded-md border-gray-300 bg-white text-gray-800"
+              [(ngModel)]="this.review.note_price" />
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-sm font-medium mb-2 text-gray-600">Photo(s) :</label>
+            <input type="text" class="w-full p-3 border rounded-md border-gray-300 bg-white text-gray-800"
+              [(ngModel)]="this.review.note_photo" />
+          </div>
+
+          <div class="mb-8" *ngIf="this.messageErreur!==''">
+            <div class="mt-2 text-sm text-red-600 bg-red-100 border-l-4 border-red-500 px-3 py-2 rounded-md">
+              {{ this.messageErreur }}
+            </div>
+          </div>
+
+          <div class="flex justify-end">
+            <div class="flex justify-between space-x-4">
+              <button class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md hover:bg-yellow-600"
+                (click)="rejectAntiquity()">Confirm reject</button>
+              <button class="bg-red-500 text-gray-900 px-6 py-3 rounded-md hover:bg-red-600"
+                (click)="openOrClosePopup()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+</ng-container>

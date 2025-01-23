@@ -1,0 +1,264 @@
+<div class="container mx-auto mt-10 px-4" *ngIf="currentTheme === 'dark'; else lightTheme">
+    <h1 class="text-3xl font-bold text-center mb-8 text-gray-100">User Profile</h1>
+
+    <!-- Loader -->
+    <div *ngIf="isLoading" class="flex justify-center items-center">
+        <span class="spinner-border text-primary"></span>
+    </div>
+
+    <!-- Formulaire -->
+    <form *ngIf="!isLoading && userDetails" class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 text-gray-100">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div>
+                <label for="firstName" class="block text-gray-300 font-bold mb-2">First Name</label>
+                <input
+                        type="text"
+                        id="firstName"
+                        class="shadow border rounded w-full py-2 px-3 focus:outline-none bg-gray-700 text-gray-100"
+                        [(ngModel)]="userDetails.firstName"
+                        name="firstName"
+                />
+            </div>
+            <div>
+                <label for="lastName" class="block text-gray-300 font-bold mb-2">Last Name</label>
+                <input
+                        type="text"
+                        id="lastName"
+                        class="shadow border rounded w-full py-2 px-3 focus:outline-none bg-gray-700 text-gray-100"
+                        [(ngModel)]="userDetails.lastName"
+                        name="lastName"
+                />
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div>
+                <label for="email" class="block text-gray-300 font-bold mb-2">Email</label>
+                <input
+                        type="email"
+                        id="email"
+                        class="shadow border rounded w-full py-2 px-3 bg-gray-700 text-gray-100"
+                        [(ngModel)]="userDetails.email"
+                        name="email"
+                        disabled
+                />
+            </div>
+            <div>
+                <label for="phoneNumber" class="block text-gray-300 font-bold mb-2">Phone Number</label>
+                <input
+                        type="text"
+                        id="phoneNumber"
+                        class="shadow border rounded w-full py-2 px-3 focus:outline-none bg-gray-700 text-gray-100"
+                        [(ngModel)]="userDetails.phoneNumber"
+                        name="phoneNumber"
+                />
+            </div>
+            <div>
+                <label for="balance" class="block text-gray-300 font-bold mb-2">Balance: {{userDetails.balance || 0}} €</label>
+            </div>
+        </div>
+
+        <div *ngIf="userDetails.groups && userDetails.groups.length > 0" class="mb-6">
+          <label for="groups" class="block text-gray-300 font-bold mb-2">Groups</label>
+          <input
+            type="text"
+            id="groups"
+            class="shadow border rounded w-full py-2 px-3 bg-gray-700 text-gray-100"
+            [(ngModel)]="userDetails.groups"
+            name="groups"
+            disabled
+          />
+        </div>
+
+        <div class="flex justify-center space-x-4">
+            <button
+                    type="button"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    (click)="saveChanges()"
+            >
+                Save Changes
+            </button>
+          <button
+            type="button"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            (click)="deleteData()"
+          >
+            Delete data
+          </button>
+        </div>
+    </form>
+
+    <div *ngIf="showSuccessMessage || showErrorMessage" class="text-center mt-6">
+        <p *ngIf="showSuccessMessage" class="bg-green-600 border-l-4 border-green-700 text-gray-100 p-4 rounded-md shadow-md inline-block">
+            Sauvegarde réussie !
+        </p>
+        <p *ngIf="showErrorMessage" class="bg-red-600 border-l-4 border-red-700 text-gray-100 p-4 rounded-md shadow-md inline-block">
+            Une erreur s'est produite. Veuillez réessayer.
+        </p>
+    </div>
+  <div class="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+    <div class="container mx-auto py-8">
+      <h1 class="text-2xl font-bold mb-6 text-center">Your Antiquities List</h1>
+      <div *ngFor="let antiquity of antiquities" class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 mb-4">
+        <!-- Image -->
+        <div class="flex items-center">
+          <img
+            [src]="antiquity.photos[0]"
+            alt="Antiquity Image"
+            class="w-20 h-20 object-cover rounded-lg mr-4"
+          />
+          <div class="flex-1">
+            <!-- Title -->
+            <h2 class="text-lg font-semibold">{{ antiquity.titleAntiquity }}</h2>
+            <!-- Price -->
+            <p class="text-gray-600 dark:text-gray-400">€{{ antiquity.priceAntiquity }}</p>
+          </div>
+          <!-- Details Button -->
+          <button
+            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg"
+            (click)="viewDetails(antiquity.idAntiquity)"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Light Theme -->
+<ng-template #lightTheme>
+    <div class="container mx-auto mt-10 px-4">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">User Profile</h1>
+
+        <!-- Loader -->
+        <div *ngIf="isLoading" class="flex justify-center items-center">
+            <span class="spinner-border text-primary"></span>
+        </div>
+
+        <!-- Formulaire -->
+        <form *ngIf="!isLoading && userDetails" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                <div>
+                    <label for="firstName" class="block text-gray-700 font-bold mb-2">First Name</label>
+                    <input
+                            type="text"
+                            id="firstName"
+                            class="shadow border rounded w-full py-2 px-3 focus:outline-none"
+                            [(ngModel)]="userDetails.firstName"
+                            name="firstName"
+                    />
+                </div>
+                <div>
+                    <label for="lastName" class="block text-gray-700 font-bold mb-2">Last Name</label>
+                    <input
+                            type="text"
+                            id="lastName"
+                            class="shadow border rounded w-full py-2 px-3 focus:outline-none"
+                            [(ngModel)]="userDetails.lastName"
+                            name="lastName"
+                    />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                <div>
+                    <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+                    <input
+                            type="email"
+                            id="email"
+                            class="shadow border rounded w-full py-2 px-3"
+                            [(ngModel)]="userDetails.email"
+                            name="email"
+                            disabled
+                    />
+                </div>
+                <div>
+                    <label for="phoneNumber" class="block text-gray-700 font-bold mb-2">Phone Number</label>
+                    <input
+                            type="text"
+                            id="phoneNumber"
+                            class="shadow border rounded w-full py-2 px-3 focus:outline-none"
+                            [(ngModel)]="userDetails.phoneNumber"
+                            name="phoneNumber"
+                    />
+                </div>
+                <div>
+                    <label for="balance" class="block text-gray-700 font-bold mb-2">Balance: {{userDetails.balance || 0}} €</label>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label for="groups" class="block text-gray-700 font-bold mb-2">Groups</label>
+                <input
+                        type="text"
+                        id="groups"
+                        class="shadow border rounded w-full py-2 px-3"
+                        [(ngModel)]="userDetails.groups"
+                        name="groups"
+                        disabled
+                />
+            </div>
+
+            <div class="flex justify-center space-x-4">
+                <button
+                        type="button"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        (click)="saveChanges()"
+                >
+                    Save Changes
+                </button>
+              <button
+                type="button"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                (click)="deleteData()"
+              >
+                Delete data
+              </button>
+            </div>
+        </form>
+
+        <!-- Messages centrés sous le formulaire -->
+        <div *ngIf="showSuccessMessage || showErrorMessage" class="text-center mt-6">
+            <p *ngIf="showSuccessMessage" class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md shadow-md inline-block">
+                Sauvegarde réussie !
+            </p>
+            <p *ngIf="showErrorMessage" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-md inline-block">
+                Une erreur s'est produite. Veuillez réessayer.
+            </p>
+        </div>
+    </div>
+
+  <div  class="min-h-screen bg-white text-gray-800">
+    <div class="container mx-auto py-8">
+      <h1 class="text-2xl font-bold mb-6 text-center">Your Antiquities List</h1>
+      <div *ngFor="let antiquity of antiquities" class="bg-white shadow-lg rounded-lg p-4 mb-4">
+        <!-- Image -->
+        <div class="flex items-center">
+          <img
+            [src]="antiquity.photos[0]"
+            alt="Antiquity Image"
+            class="w-20 h-20 object-cover rounded-lg mr-4"
+          />
+          <div class="flex-1">
+            <!-- Title -->
+            <h2 class="text-lg font-semibold">{{ antiquity.titleAntiquity }}</h2>
+            <!-- Price -->
+            <p class="text-gray-600">{{ antiquity.priceAntiquity | currency }}</p>
+          </div>
+          <!-- Details Button -->
+          <button
+            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg"
+            (click)="viewDetails(antiquity.idAntiquity)"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+

@@ -1,0 +1,95 @@
+<!-- Display dark theme if savedTheme is 'dark', otherwise display light theme -->
+<span *ngIf="currentTheme === 'dark'; else showDefault">
+    <!-- Hero Section -->
+    <section class="bg-cover bg-center h-screen relative" style="background-image: url('./assets/background.jpg');">
+        <div class="bg-black bg-opacity-70 h-full flex items-center justify-center">
+            <div class="text-center text-white px-6">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6">Welcome to Anticair'App</h2>
+                <p class="text-lg md:text-2xl mb-6">The best platform to buy and sell quality antiques.</p>
+                <a href="#" class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md text-lg font-semibold hover:bg-yellow-600">Get Started</a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-12"></div>
+    </section>
+
+    <!-- Concept Section -->
+    <section class="container mx-auto px-6 py-16">
+        <h2 class="text-3xl font-bold text-gray-200 text-center mb-12">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+            <!-- Seller Section -->
+            <div class="bg-gray-700 p-8 rounded-lg shadow-lg">
+                <i class="fas fa-camera-retro text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-200 mb-4">Sellers</h3>
+                <p class="text-gray-400">Take photos, specify the price and description, submit your items for sale, and receive status notifications.</p>
+            </div>
+
+            <!-- Antiquarian Section -->
+            <div class="bg-gray-700 p-8 rounded-lg shadow-lg">
+                <i class="fas fa-gavel text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-200 mb-4">Antiquarians</h3>
+                <p class="text-gray-400">Review the items for sale, accept or reject sales, and manage the sales site.</p>
+            </div>
+
+            <!-- Client Section -->
+            <div class="bg-gray-700 p-8 rounded-lg shadow-lg">
+                <i class="fas fa-shopping-cart text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-200 mb-4">Clients</h3>
+                <p class="text-gray-400">Browse the site, use filters to find what you're looking for, buy antiques, and pay with PayPal.</p>
+            </div>
+
+            <!-- Admin Section -->
+            <div class="bg-gray-700 p-8 rounded-lg shadow-lg">
+                <i class="fas fa-user-shield text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-200 mb-4">Administrator</h3>
+                <p class="text-gray-400">Manage antiquarians for a secure and compliant site.</p>
+            </div>
+        </div>
+    </section>
+</span>
+
+<ng-template #showDefault>
+    <!-- Hero Section -->
+    <section class="bg-cover bg-center h-screen" style="background-image: url('./assets/background.jpg');">
+        <div class="bg-black bg-opacity-50 h-full flex items-center justify-center">
+            <div class="text-center text-white px-6">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6">Welcome to Anticair'App</h2>
+                <p class="text-lg md:text-2xl mb-6">The best platform to buy and sell quality antiques.</p>
+                <a href="#" class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-md text-lg font-semibold hover:bg-yellow-600">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section class="container mx-auto px-6 py-16">
+        <h2 class="text-3xl font-bold text-gray-800 text-center mb-12">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+            <!-- Seller Section -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <i class="fas fa-camera-retro text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Sellers</h3>
+                <p class="text-gray-600">Take photos, specify the price and category, submit your items for sale, and receive status notifications.</p>
+            </div>
+
+            <!-- Antiquarian Section -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <i class="fas fa-gavel text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Antiquarians</h3>
+                <p class="text-gray-600">Review the items for sale, accept or reject sales, and manage the sales site.</p>
+            </div>
+
+            <!-- Client Section -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <i class="fas fa-shopping-cart text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Clients</h3>
+                <p class="text-gray-600">Browse the site, use filters to find what you're looking for, buy antiques, and pay with PayPal.</p>
+            </div>
+
+            <!-- Admin Section -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <i class="fas fa-user-shield text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Administrator</h3>
+                <p class="text-gray-600">Manage antiquarians and GDPR requests for a secure and compliant site.</p>
+            </div>
+        </div>
+    </section>
+</ng-template>

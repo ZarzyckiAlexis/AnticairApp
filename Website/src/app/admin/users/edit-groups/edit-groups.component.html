@@ -1,0 +1,62 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 sm:px-6 lg:px-8" *ngIf="currentTheme === 'dark'; else default">
+  <div class="bg-gray-700 rounded-lg shadow-lg p-6 w-full max-w-lg sm:p-8 lg:p-10">
+    <h1 class="text-xl sm:text-2xl font-bold mb-4 text-white text-center sm:text-left">Select Groups for {{ userEmail }}</h1>
+    <p class="mb-6 text-gray-300 text-center sm:text-left">Choose the groups you want to assign</p>
+    <form>
+      <div *ngFor="let group of groups" class="flex items-center mb-4">
+        <label>
+          <input [id]="group.name" type="checkbox" [(ngModel)]="group.selected"
+            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" name="{{group.name}}" />
+        </label>
+        <label [for]="group.name" class="ml-2 text-gray-100 text-sm sm:text-base">
+          {{ group.name }}
+        </label>
+      </div>
+      <div class="flex justify-end flex-wrap gap-2">
+        <button type="button"
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors w-full sm:w-auto"
+          (click)="saveGroups()">
+          Save
+        </button>
+        <button type="button"
+          class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors w-full sm:w-auto"
+          [routerLink]="['/admin/users/']">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Light Theme -->
+<ng-template #default>
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg sm:p-8 lg:p-10">
+      <h1 class="text-xl sm:text-2xl font-bold mb-4 text-gray-800 text-center sm:text-left">Select Groups for {{ userEmail }}</h1>
+      <p class="mb-6 text-gray-600 text-center sm:text-left">Choose the groups you want to assign</p>
+      <form>
+        <div *ngFor="let group of groups" class="flex items-center mb-4">
+          <label>
+            <input [id]="group.name" type="checkbox" [(ngModel)]="group.selected"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" name="{{group.name}}" />
+          </label>
+          <label [for]="group.name" class="ml-2 text-gray-800 text-sm sm:text-base">
+            {{ group.name }}
+          </label>
+        </div>
+        <div class="flex justify-end flex-wrap gap-2">
+          <button type="button"
+            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors w-full sm:w-auto"
+            (click)="saveGroups()">
+            Save
+          </button>
+          <button type="button"
+            class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition-colors w-full sm:w-auto"
+            [routerLink]="['/admin/users/']">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

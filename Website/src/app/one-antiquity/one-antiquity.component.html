@@ -1,0 +1,50 @@
+<span *ngIf="currentTheme === 'dark'; else showDefault">
+    <div class="flex justify-center items-center pt-16 bg-gray-800">
+        <div *ngIf="antiquity" class="bg-gray-700 text-gray-200 p-8 rounded-lg shadow-lg max-w-3xl w-full">
+            <h2 class="text-3xl font-bold text-center mb-6">{{ antiquity.titleAntiquity }}</h2>
+            <div class="mb-6">
+                <div class="carousel" *ngIf="imageUrls.length > 0">
+                    <button *ngIf="imageUrls.length > 1" (click)="prevImage()">&#10094;</button>
+                    <img [src]="imageUrls[currentImageIndex]" alt="Image {{ currentImageIndex + 1 }}" class="d-block w-100 carousel-image">
+                    <button *ngIf="imageUrls.length > 1" (click)="nextImage()">&#10095;</button>
+                </div>
+
+                <ng-template #placeholder>
+                    <div class="w-full h-64 bg-gray-500 rounded-md mb-4 flex items-center justify-center">
+                        <span class="text-gray-300">No Image Available</span>
+                    </div>
+                </ng-template>
+            </div>
+
+            <p class="text-gray-400 text-lg mb-4">{{ antiquity.descriptionAntiquity }}</p>
+
+            <p class="text-yellow-400 font-bold text-lg mb-4">Price: {{ antiquity.priceAntiquity | number: '1.2-2'}}€</p>
+        </div>
+    </div>
+</span>
+
+<ng-template #showDefault>
+    <div class="flex justify-center items-center pt-16 bg-gray-100">
+        <div *ngIf="antiquity" class="bg-gray-100 text-gray-800 p-8 rounded-lg shadow-lg max-w-3xl w-full">
+            <h2 class="text-3xl font-bold text-center mb-6">{{ antiquity.titleAntiquity }}</h2>
+
+            <div class="mb-6">
+                <div class="carousel" *ngIf="imageUrls.length > 0">
+                    <button *ngIf="imageUrls.length > 1" (click)="prevImage()">&#10094;</button>
+                    <img [src]="imageUrls[currentImageIndex]" alt="Image {{ currentImageIndex + 1 }}" class="d-block w-100 carousel-image">
+                    <button *ngIf="imageUrls.length > 1" (click)="nextImage()">&#10095;</button>
+                </div>
+
+                <ng-template #placeholder>
+                    <div class="w-full h-64 bg-gray-500 rounded-md mb-4 flex items-center justify-center">
+                        <span class="text-gray-300">No Image Available</span>
+                    </div>
+                </ng-template>
+            </div>
+
+            <p class="text-gray-600 text-lg mb-4">{{ antiquity.descriptionAntiquity }}</p>
+
+            <p class="text-yellow-400 font-bold text-lg mb-4">Price: {{ antiquity.priceAntiquity | number: '1.2-2'}}€</p>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="EN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email</title>
+    <style>
+        /* CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a202c;
+            color: #f4f4f4;
+        }
+
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #ecc94b;
+            color: #1a202c;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 20px;
+            line-height: 1.6;
+            color: #f7fafc;
+            text-align: left;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #ecc94b;
+            color: #1a202c;
+            padding: 12px 20px;
+            margin-top: 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #d69e2e;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #a0aec0;
+            background-color: #2d3748;
+            border-top: 1px solid #4a5568;
+        }
+
+        a {
+            color: #ecc94b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:visited {
+            color: #ecc94b;
+        }
+
+        a:hover {
+            color: #d69e2e;
+        }
+
+        a:active {
+            color: #b7791f;
+        }
+
+    </style>
+</head>
+<body>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#f4f4f4">
+    <tr>
+        <td>
+            <div class="email-container">
+                <!--Header -->
+                <div class="header">
+                    Welcome to Anticair'App
+                </div>
+
+                <!-- Main content -->
+                <div class="content">
+                    <h2>Hello ${receiver_name},</h2>
+
+                    <p>A new antiquity need to be checked</p>
+                    <p>
+                        Thank you,<br>
+                        Anticair'App's team.
+                    </p>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer">
+                    This mail has been sent automatically. Thank you to don't reply.<br>
+                    &copy; ${current_year} Anticair'App. All rights reserved.
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

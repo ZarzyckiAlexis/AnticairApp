@@ -1,0 +1,92 @@
+<!-- edit-antiquity.component.html -->
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">Modify Antiquity</h2>
+
+    <form (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Champ Title -->
+      <div class="flex flex-col">
+        <label for="titleAntiquity" class="mb-2 font-medium">Title</label>
+        <input
+          type="text"
+          id="titleAntiquity"
+          [(ngModel)]="antiquity.titleAntiquity"
+          name="titleAntiquity"
+          class="w-full p-3 border rounded-md border-gray-600 bg-gray-800 text-gray-300"
+          required
+        />
+      </div>
+
+
+      <!-- Champ Description -->
+      <div class="flex flex-col">
+        <label for="descriptionAntiquity" class="mb-2 font-medium">Description</label>
+        <textarea
+          id="descriptionAntiquity"
+          [(ngModel)]="antiquity.descriptionAntiquity"
+          name="descriptionAntiquity"
+          class="w-full p-3 border rounded-md border-gray-600 bg-gray-800 text-gray-300"
+          required
+        ></textarea>
+      </div>
+
+      <!-- Champ Prix -->
+      <div class="flex flex-col">
+        <label for="priceAntiquity" class="mb-2 font-medium">Price</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-500">€</span>
+          <input
+            type="number"
+            id="priceAntiquity"
+            [(ngModel)]="antiquity.priceAntiquity"
+            name="priceAntiquity"
+            class="w-full p-3 pl-8 border rounded-md border-gray-600 bg-gray-800 text-gray-300"
+            step="0.01"
+            required
+          />
+        </div>
+      </div>
+
+
+      <!-- Gestion des Images -->
+      <div class="flex flex-col">
+        <label for="photos" class="mb-2 font-medium">Images (max 10)</label>
+        <input
+          type="file"
+          id="photos"
+          (change)="onFileSelect($event)"
+          multiple
+          accept="image/*"
+          class="border border-gray-300 rounded p-2 focus:outline-none focus:ring focus:ring-blue-300"
+        />
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+          <div
+            *ngFor="let photo of imagePreviews; let i = index"
+            class="relative"
+          >
+            <img [src]="photo" alt="Prévisualisation de l'image" class="w-full h-auto rounded shadow" />
+            <button
+              type="button"
+              (click)="removeImage(i)"
+              class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 focus:outline-none focus:ring focus:ring-red-300"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        (click)="deleteById(antiquity.idAntiquity)"
+        class="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+      >
+        Delete
+      </button>
+    </form>
+  </div>

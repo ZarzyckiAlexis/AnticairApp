@@ -1,0 +1,5 @@
+@media (min-width: 768px) {
+  .md\:pl-64 {
+    padding-left: 0;
+  }
+}
